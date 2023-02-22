@@ -12,17 +12,26 @@
         <label>SOBRENOME:</label>
         <input name="sobreNome">
         <label>IDADE:</label>
-        <input name="idade">
+        <input name="idade" required="required"> 
         <br/>
         <br/>
         <label>SALVAR:</label>
         <input type="submit" value="Salvar">
     </form>
-    <table>
+    <br/>
+    <br/>
+    <br/>
+    
+    <div >
+    <a href="/listapessoas">listar pessoas </a>
+    </div>
+    
+    <table style="width:100%;">
         <tr th:each = "pessoa : ${pessoas}">
             <td th:text = "${pessoa.id}"></td>
             <td th:text = "${pessoa.nome}"></td>
             <td th:text = "${pessoa.sobreNome}"></td>
+            <td th:text = "${pessoa.idade}"></td>
         </tr>
     </table>
 </div>

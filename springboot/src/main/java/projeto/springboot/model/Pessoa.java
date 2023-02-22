@@ -20,6 +20,10 @@ public class Pessoa implements Serializable {
 	private String sobreNome;
 
 	private int idade;
+	
+	public Long getId() {
+		return id;
+	}
 
 	public void setIdade(int idade) {
 		this.idade = idade;
