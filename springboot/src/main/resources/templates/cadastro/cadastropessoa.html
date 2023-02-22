@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+<style type="text/css">
+	label, form, a { 
+	left: 1%;
+}
+</style>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -8,22 +16,21 @@
 <div>
     <form action="salvarpessoa" method="post">
         <label>NOME:</label>
-        <input name="nome">
+        <input name="nome" required="required">
         <label>SOBRENOME:</label>
-        <input name="sobreNome">
+        <input name="sobreNome" required="required">
         <label>IDADE:</label>
         <input name="idade" required="required"> 
         <br/>
         <br/>
-        <label>SALVAR:</label>
-        <input type="submit" value="Salvar">
+        <input type="submit" value="Salvar" class="waves-effect waves-light btn-small" style="left:1%;">
     </form>
     <br/>
     <br/>
     <br/>
     
     <div >
-    <a href="/listapessoas">listar pessoas </a>
+    <a href="/listapessoas" class="waves-effect waves-light btn">listar pessoas </a>
     </div>
     
     <table style="width:100%;">
@@ -36,5 +43,7 @@
     </table>
 </div>
 
+<script type="text/javascript" src="materialize/js/materialize.js"></script>
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
 </html>
