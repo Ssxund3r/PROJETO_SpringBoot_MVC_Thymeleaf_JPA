@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
 <style type="text/css">
 	label, form, a { 
 	left: 1%;
@@ -14,13 +14,15 @@
 </head>
 <body>
 <div>
-    <form action="salvarpessoa" method="post">
+    <form action="salvarpessoa" method="post" th:object="${pessoaobj}">
+    	<label>ID:</label>
+    	<input name="id" th:field="*{id}" readonly="readonly">
         <label>NOME:</label>
-        <input name="nome" required="required">
+        <input name="nome" required="required" th:field="*{nome}">
         <label>SOBRENOME:</label>
-        <input name="sobreNome" required="required">
+        <input name="sobreNome" required="required" th:field="*{sobreNome}">
         <label>IDADE:</label>
-        <input name="idade" required="required"> 
+        <input name="idade" required="required" th:field="*{idade}"> 
         <br/>
         <br/>
         <input type="submit" value="Salvar" class="waves-effect waves-light btn-small" style="left:1%;">
@@ -39,11 +41,12 @@
             <td th:text = "${pessoa.nome}"></td>
             <td th:text = "${pessoa.sobreNome}"></td>
             <td th:text = "${pessoa.idade}"></td>
+            <td><a th:href=@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}>Editar</a> </td>
         </tr>
     </table>
 </div>
 
-<script type="text/javascript" src="materialize/js/materialize.js"></script>
-<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
 </body>
 </html>
