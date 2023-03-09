@@ -1,60 +1,112 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
-<style type="text/css">
-	label, form, a { 
-	left: 1%;
-}
-</style>
-<meta charset="ISO-8859-1">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.min.css" media="screen,projection" />
+<meta charset="UTF-8">
 <title>Projeto</title>
+
+<style type="text/css">
+table.striped>tbody>tr:nth-child(odd){
+	background-color: rgba(158, 154, 154, 0.5);
+}
+
+form input[type=submit]{
+	color: white;
+}
+
+</style>
 </head>
 <body>
-<div>
-    <form action="salvarpessoa" method="post" th:object="${pessoaobj}">
-    	<label>ID:</label>
-    	<input name="id" th:field="*{id}" readonly="readonly">
-        <label>NOME:</label>
-        <input name="nome" required="required" th:field="*{nome}">
-        <label>SOBRENOME:</label>
-        <input name="sobreNome" required="required" th:field="*{sobreNome}">
-        <label>IDADE:</label>
-        <input name="idade" required="required" th:field="*{idade}"> 
-        <br/>
-        <br/>
-        <input type="submit" value="Salvar" class="waves-effect waves-light btn-small" style="left:1%;">
-    </form>
+	<h3>Projeto SpringBoot + Thymeleaf + Material Design Lite</h3>
+	<h5>Cadastro de Pessoas</h5>
+	<div class="row">
+		<form action="salvarpessoa" id="formpessoa" method="post"
+			th:object="${pessoaobj}" class="col s12">
 
-    <br/>
-    <br/>
-    <a href="/listapessoas" class="waves-effect waves-light btn">listar pessoas </a>
-    <br/>
-    <br/>
-    
-    <form action="pesquisarpessoa" method="post">
-    	<label>Pesquisar:</label>
-    	<input name="nomepesquisa">
-    	<input class="waves-effect waves-light btn-small" type="submit" value="Buscar">
-    </form>
-    
-    <br/>
-    <br/>
-    <table style="width:100%;">
-        <tr th:each = "pessoa : ${pessoas}">
-            <td th:text = "${pessoa.id}"></td>
-            <td th:text = "${pessoa.nome}"></td>
-            <td th:text = "${pessoa.sobreNome}"></td>
-            <td th:text = "${pessoa.idade}"></td>
-            <td><a th:href=@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}>Editar</a> </td>
-            <td><a th:href=@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}>Excluir</a> </td>
-        </tr>
-    </table>
-</div>
+			<div class="row">
+				<div class="input-fiel col s6">
+					<label for="id" class="active">ID:</label> <input name="id"
+						th:field="*{id}" readonly="readonly" id="id">
+				</div>
+				<div class="input-fiel col s6">
+					<label for="nome" class="active">NOME:</label> <input name="nome"
+						required="required" th:field="*{nome}" id="nome">
+				</div>
+			</div>
 
-<script type="text/javascript" src="/materialize/js/materialize.js"></script>
-<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="sobrenome" class="active">SOBRENOME:</label> <input
+						name="sobreNome" required="required" th:field="*{sobreNome}"
+						id="sobrenome" class="validate">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="idade" class="active">IDADE:</label> <input
+						name="idade" th:field="*{idade}" id="idade" class="validade">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input field col s6">
+					<input type="submit" value="Salvar"
+						class="waves-effect waves-light btn-small" id="btnsalvar">
+					<button class="waves-effect waves-light btn-small"
+						onclick="document.getElementById('formpessoa').reset()">Novo</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="row">
+		<form action="pesquisarpessoa" method="post" class="col s12">
+			<div class="row">
+				<div class="input-fiel col s6">
+					<label for="nomepesquisa" class="active">Pesquisar:</label> 
+					<input name="nomepesquisa" id="nomepesquisa" class="validate"> 
+					<input class="waves-effect waves-light btn-small" type="submit" value="Buscar"> 
+					<a href="/listapessoas" class="waves-effect waves-light btn">listar pessoas</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+		<table class="striped">
+		<thead>
+			<tr>
+			  <th>ID</th>
+			  <th>Nome</th>
+			  <th>Sobrenome</th>
+			  <th>Idade</th>
+			  <th>Editar</th>
+			  <th>Excluir</th>
+			</tr>
+		</thead>
+			<tr th:each="pessoa : ${pessoas}">
+				<td th:text="${pessoa.id}"></td>
+				<td th:text="${pessoa.nome}"></td>
+				<td th:text="${pessoa.sobreNome}"></td>
+				<td th:text="${pessoa.idade}"></td>
+				<td><a
+					th:href=@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}>Editar</a>
+				</td>
+				<td><a
+					th:href=@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}>Excluir</a>
+				</td>
+			</tr>
+		</table>
+	
+	
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	
 </body>
 </html>
