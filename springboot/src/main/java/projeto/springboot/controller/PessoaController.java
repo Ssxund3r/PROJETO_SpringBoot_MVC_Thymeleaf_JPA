@@ -3,8 +3,9 @@ package projeto.springboot.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,8 @@ import projeto.springboot.repository.PessoaRepository;
 import projeto.springboot.repository.TelefoneRepository;
 
 @Controller
+@Configuration
+@ComponentScan(basePackages={"projeto.springboot.controller"})
 public class PessoaController {
 
 	@Autowired
@@ -92,6 +95,7 @@ public class PessoaController {
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
 		modelAndView.addObject("pessoaobj", pessoa.get());
+		modelAndView.addObject("telefones", telefoneRepository.getTelefone(idpessoa));
 		return modelAndView;
 	}
 	
@@ -105,7 +109,24 @@ public class PessoaController {
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
 		modelAndView.addObject("pessoaobj", pessoa);
+		modelAndView.addObject("telefones", telefoneRepository.getTelefone(pessoaid));
+		
 		return modelAndView;
+	}
+	
+	@GetMapping("/removertelefone/{idtelefone}")
+	public ModelAndView removerTelefone(@PathVariable("idtelefone") Long idtelefone) {
+		
+		Pessoa pessoa = telefoneRepository.findById(idtelefone).get().getPessoa();
+		
+		telefoneRepository.deleteById(idtelefone);
+
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		modelAndView.addObject("pessoaobj", pessoa);
+		modelAndView.addObject("pessoaobj", new Pessoa());
+		modelAndView.addObject("telefones", telefoneRepository.getTelefone(pessoa.getId()));
+		return modelAndView;
+
 	}
 	
 }

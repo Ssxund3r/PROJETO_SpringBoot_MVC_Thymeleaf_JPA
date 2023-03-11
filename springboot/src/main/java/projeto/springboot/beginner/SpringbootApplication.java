@@ -1,4 +1,4 @@
-package projeto.springboot.springboot;
+package projeto.springboot.beginner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EntityScan(basePackages="projeto.springboot.model")
-@ComponentScan(basePackages = {"projeto.*"})
+@EntityScan(basePackages="projeto.*")
+@ComponentScan(basePackages = {"projeto.springboot.controller"})
 @EnableJpaRepositories(basePackages = {"projeto.*"})
 @EnableTransactionManagement
 public class SpringbootApplication {
