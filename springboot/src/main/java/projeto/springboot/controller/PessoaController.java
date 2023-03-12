@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -123,14 +124,38 @@ public class PessoaController {
 	}
 	
 	@PostMapping("*/addfonePessoa/{pessoaid}")
-	public ModelAndView addFonePessoa(Telefone telefone, 
+	public ModelAndView addFonePessoa(@NonNull Telefone telefone, 
 										@PathVariable("pessoaid") Long pessoaid) {
 			
 		Pessoa pessoa = pessoaRepository.findById(pessoaid).get();
-		telefone.setPessoa(pessoa);
-		telefoneRepository.save(telefone);
+		
+		if(telefone != null && telefone.getNumero().isEmpty() 
+				|| telefone.getTipo().isEmpty()) {
+			
+			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+			modelAndView.addObject("pessoaobj", pessoa);
+			modelAndView.addObject("telefones", telefoneRepository.getTelefone(pessoaid));
+			
+			List<String> msg = new ArrayList<String>();
+			
+			if (telefone.getNumero().isEmpty()) {
+				msg.add("Preenchimento do campo é obrigatório!");
+			}
+			if(telefone.getTipo().isEmpty()) {
+				msg.add("Preenchimento do campo é obrigatório!");
+			}
+			
+			modelAndView.addObject("msg",msg);
+			
+			return modelAndView;
+		}
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		
+		telefone.setPessoa(pessoa);
+		
+		telefoneRepository.save(telefone);
+		
 		modelAndView.addObject("pessoaobj", pessoa);
 		modelAndView.addObject("telefones", telefoneRepository.getTelefone(pessoaid));
 		
