@@ -20,21 +20,85 @@ public class Pessoa implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@NotNull(message = "Campo não deve ser nulo!")
-	@NotEmpty(message="preenchimento do campo é obrigatório!")
+	@NotEmpty(message = "preenchimento do campo é obrigatório!")
 	private String nome;
-	
+
 	@NotNull(message = "Campo não deve ser nulo!")
-	@NotEmpty(message="preenchimento do campo é obrigatório!")
+	@NotEmpty(message = "preenchimento do campo é obrigatório!")
 	private String sobreNome;
-	
+
 	@Min(value = 18, message = "Idade inválida!")
 	private int idade;
-	
-	@OneToMany(mappedBy ="pessoa", orphanRemoval=true, cascade = CascadeType.ALL)
+
+	private String cep;
+
+	private String rua;
+
+	private String bairro;
+
+	private String cidade;
+
+	private String uf;
+
+	private String ibge;
+
+	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Telefone> telefones;
-	
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getIbge() {
+		return ibge;
+	}
+
+	public void setIbge(String ibge) {
+		this.ibge = ibge;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -62,7 +126,7 @@ public class Pessoa implements Serializable {
 	public void setSobreNome(String sobreNome) {
 		this.sobreNome = sobreNome;
 	}
-	
+
 	public List<Telefone> getTelefones() {
 		return telefones;
 	}
