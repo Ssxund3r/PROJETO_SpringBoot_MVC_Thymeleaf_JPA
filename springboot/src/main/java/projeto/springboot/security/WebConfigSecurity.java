@@ -26,8 +26,12 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 				.authorizeRequests() // Pertimir restringir acessos
 				.antMatchers(HttpMethod.GET, "/").permitAll() // Qualquer usuário acessa a pagina inicial
 				.antMatchers(HttpMethod.GET, "/cadastropessoa").hasAnyRole("ADMIN")
+				.antMatchers("**/materialize/**").permitAll()
 				.anyRequest().authenticated().and().formLogin().permitAll() // permite qualquer usuário
-				.and().logout() // Mapeia URL de Logout e invalida usuário autenticado
+				.loginPage("/login")
+				.defaultSuccessUrl("/cadastropessoa")
+				.failureUrl("/login?error=true")
+				.and().logout().logoutSuccessUrl("/login") // Mapeia URL de Logout e invalida usuário autenticado
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 
 	}
@@ -37,12 +41,6 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 		
 		auth.userDetailsService(implementacaoUserDetailsService)
 		.passwordEncoder(new BCryptPasswordEncoder());
-		
-		/*auth.inMemoryAuthentication()
-		.passwordEncoder(new BCryptPasswordEncoder())
-		.withUser("postgre")
-		.password("$2a$10$GjtBve8Vh65LI1OPdc/ha.jbkyftvlEa35t185L8HWNXvAaNut.yO")
-		.roles("ADMIN");*/
 	}
 
 	@Override // Ignora URL especificas

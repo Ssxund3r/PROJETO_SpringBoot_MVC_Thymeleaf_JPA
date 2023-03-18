@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
+<meta charset="UTF-8">
+<title>Projeto - Springboot_JPA_Thymeleaf</title>
+<style type="text/css">
+table.striped>tbody>tr:nth-child(odd){
+	background-color: rgba(158, 154, 154, 0.5);
+}
+
+form input[type=submit]{
+	color: white;
+}
+
+</style>
+</head>
+<body>
+	<h1>Acesso ao Sistema</h1>
+
+	<form th:action="@{/login}" method="post" class="col s12">
+		<div class="row">
+			<div class="input-fiel col s6">
+				<label>Login</label>
+				<input type="text" name="username">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="input-fiel col s6">
+				<label>Senha</label>
+				<input type="password" name="password">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="input-fiel col s6" >
+				<input name="logar" type="submit" value="logar" 
+					class="waves-effect waves-light btn">
+			</div>
+		</div>
+		
+	</form>
+	
+	 <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
