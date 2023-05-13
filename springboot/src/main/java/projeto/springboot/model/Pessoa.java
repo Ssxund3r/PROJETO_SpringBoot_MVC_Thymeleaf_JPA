@@ -31,22 +31,27 @@ public class Pessoa implements Serializable {
 
 	@Min(value = 18, message = "Idade inválida!")
 	private int idade;
-
+	
+	private String sexopessoa;
+	
 	private String cep;
-
 	private String rua;
-
 	private String bairro;
-
 	private String cidade;
-
 	private String uf;
-
 	private String ibge;
 
 	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Telefone> telefones;
-
+	
+	public String getSexopessoa() {
+		return sexopessoa;
+	}
+	
+	public void setSexopessoa(String sexopessoa) {
+		this.sexopessoa = sexopessoa;
+	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
