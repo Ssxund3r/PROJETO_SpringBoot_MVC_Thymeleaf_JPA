@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import projeto.springboot.model.Pessoa;
@@ -108,11 +107,20 @@ public class PessoaController {
 
 	}
 	
-	@PostMapping("*/pesquisarpessoa") 
+	@PostMapping("**/pesquisarpessoa") 
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa, 
 			@RequestParam("pesqsexo") String pesqsexo) {
+		
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+		
+		if(pesqsexo != null && pesqsexo.isEmpty()) {
+		pessoas = pessoaRepository.findPessoaByNameSexo(nomepesquisa, pesqsexo);
+		} else {
+			pessoas = pessoaRepository.findPessoaByName(nomepesquisa);
+		}
+		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
-		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa));
+		modelAndView.addObject("pessoas", pessoas);
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		return modelAndView;
 	}
