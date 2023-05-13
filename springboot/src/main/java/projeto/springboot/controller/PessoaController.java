@@ -130,13 +130,50 @@ public class PessoaController {
 		return modelAndView;
 	}
 	
-	@GetMapping("**/pesquisarpessoa") 
-	public void imprimePdf(@RequestParam("nomepesquisa") String nomepesquisa, 
-			@RequestParam("pesqsexo") String pesqsexo, HttpServletRequest request,
-			HttpServletResponse response) {
-		
-		System.out.println("Foi invocado");
-		
+	@GetMapping("**/pesquisarpessoa")
+	public void imprimePdf(@RequestParam("nomepesquisa") String nomepesquisa, @RequestParam("pesqsexo") String pesqsexo,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+
+		if (pesqsexo != null && !pesqsexo.isEmpty() && nomepesquisa != null
+				&& !nomepesquisa.isEmpty()) {/* Busca por nome e sexo */
+
+			pessoas = pessoaRepository.findPessoaByNameSexo(nomepesquisa, pesqsexo);
+
+		} else if (nomepesquisa != null && !nomepesquisa.isEmpty()) {/* Busca somente por nome */
+
+			pessoas = pessoaRepository.findPessoaByName(nomepesquisa);
+
+		} else if (pesqsexo != null && !pesqsexo.isEmpty()) {/* Busca somente por sexo */
+
+			pessoas = pessoaRepository.findPessoaBySexo(pesqsexo);
+
+		} else {/* Busca todos */
+
+			Iterable<Pessoa> iterator = pessoaRepository.findAll();
+			for (Pessoa pessoa : iterator) {
+				pessoas.add(pessoa);
+			}
+		}
+
+		/* Chame o serviço que faz a geração do relatorio */
+		byte[] pdf = reportUtil.gerarRelatorio(pessoas, "pessoa", request.getServletContext());
+
+		/* Tamanho da resposta */
+		response.setContentLength(pdf.length);
+
+		/* Definir na resposta o tipo de arquivo */
+		response.setContentType("application/octet-stream");
+
+		/* Definir o cabeçalho da resposta */
+		String headerKey = "Content-Disposition";
+		String headerValue = String.format("attachment; filename=\"%s\"", "relatorio.pdf");
+		response.setHeader(headerKey, headerValue);
+
+		/* Finaliza a resposta pro navegador */
+		response.getOutputStream().write(pdf);
+
 	}
 	
 	@GetMapping("/telefones/{idpessoa}")
